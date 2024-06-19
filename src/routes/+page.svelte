@@ -17,7 +17,7 @@
             isDone: false,
         });
         toDoList = toDoList;
-        title = '';
+        title = "";
     }
 
     function remove(id: string) {
@@ -34,21 +34,7 @@
     }
 </script>
 
-<!-- 
-{#if toDoList.length === 0}
-    <div>You have no tasks</div>
-{:else}
-    {#each toDoList as toDoItem}
-        <div class="text-5xl">
-            {toDoItem.title}
-            <button on:click={() => remove(toDoItem.id)} class="btn btn-error">
-                حذف
-            </button>
-        </div>
-    {/each}
-{/if} -->
-
-<main class="p-16 max-w-screen-lg mx-auto flex flex-col gap-8">
+<main class="p-16 max-w-screen-lg mx-auto flex flex-col gap-8 min-h-[100dvh]">
     <section class="flex justify-between">
         <div class="flex flex-col gap-2">
             <h2 class="text-4xl">
@@ -59,7 +45,9 @@
             </h3>
         </div>
         <div>
-            <select class="select select-bordered w-full max-w-xs pe-10 ps-4 bg-white">
+            <select
+                class="select select-bordered w-full max-w-xs pe-10 ps-4 bg-white"
+            >
                 <option>كل الاوقات</option>
                 <option>اليوم</option>
             </select>
@@ -74,5 +62,29 @@
         <button on:click={add} class="btn btn-primary join-item rounded-r-full"
             >اضافة</button
         >
+    </section>
+    <section class="flex-1 flex">
+        {#if toDoList.length === 0}
+            <div class="flex-1 flex flex-col justify-center items-center">
+                <img
+                    src="/tree.svg"
+                    alt="no tasks left"
+                    class="w-48 h-48 grayscale"
+                />
+                ما عندك مهام متبقية!
+            </div>
+        {:else}
+            {#each toDoList as toDoItem}
+                <div class="text-5xl">
+                    {toDoItem.title}
+                    <button
+                        on:click={() => remove(toDoItem.id)}
+                        class="btn btn-error"
+                    >
+                        حذف
+                    </button>
+                </div>
+            {/each}
+        {/if}
     </section>
 </main>
