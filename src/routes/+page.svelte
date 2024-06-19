@@ -1,4 +1,9 @@
 <script lang="ts">
+    import dayjs from "dayjs";
+    import "dayjs/locale/ar";
+
+    dayjs.locale("ar");
+
     let toDoList: ToDoItem[] = [];
 
     let title: string;
@@ -22,11 +27,13 @@
     }
 
     function generateId() {
-        return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        return (
+            Date.now().toString(36) + Math.random().toString(36).substring(2)
+        );
     }
 </script>
 
-<div class="join">
+<!-- <div class="join">
     <input
         bind:value={title}
         class="input input-bordered join-item"
@@ -46,4 +53,13 @@
             </button>
         </div>
     {/each}
-{/if}
+{/if} -->
+
+<main class="p-16">
+    <div>
+        <h2 class="text-4xl">صباح الخير 👋</h2>
+        <h3 class="text-xl text-base-content/70">
+            اليوم {dayjs().format("dddd D MMMM YYYY")}
+        </h3>
+    </div>
+</main>
