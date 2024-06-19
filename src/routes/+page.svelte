@@ -55,11 +55,21 @@
     {/each}
 {/if} -->
 
-<main class="p-16">
-    <div>
-        <h2 class="text-4xl">صباح الخير 👋</h2>
-        <h3 class="text-xl text-base-content/70">
-            اليوم {dayjs().format("dddd D MMMM YYYY")}
-        </h3>
-    </div>
+<main class="p-16 max-w-screen-lg mx-auto">
+    <section class="flex justify-between">
+        <div>
+            <h2 class="text-4xl mb-2">
+                {dayjs().format("a") === "ص" ? "صباح" : "مساء"} الخير 👋
+            </h2>
+            <h3 class="text-xl text-base-content/70">
+                اليوم {dayjs().format("dddd D MMMM YYYY")}
+            </h3>
+        </div>
+        <div>
+            <select class="select select-bordered w-full max-w-xs pe-10 ps-4">
+                <option>كل الاوقات</option>
+                <option>اليوم</option>
+            </select>
+        </div>
+    </section>
 </main>
