@@ -1,4 +1,7 @@
 // See https://kit.svelte.dev/docs/types#app
+
+import type { Dayjs } from "dayjs";
+
 // for information about these interfaces
 declare global {
 	namespace App {
@@ -11,10 +14,10 @@ declare global {
 
 	interface ToDoItem {
 		id: string;
-        title: string;
-        date: Date;
-        isDone: boolean;
-    }
+		title: string;
+		date: Dayjs;
+		isDone: boolean;
+	}
 }
 
-export {};
+export { };

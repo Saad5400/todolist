@@ -1,19 +1,21 @@
 <script lang="ts">
     import dayjs from "dayjs";
     import "dayjs/locale/ar";
+    import relativeTime from 'dayjs/plugin/relativeTime'
+
     import { toDoList } from "$lib/stores/toDoList";
 
     dayjs.locale("ar");
+    dayjs.extend(relativeTime);
 
     let title: string;
-    let date: Date;
 
     function add() {
         toDoList.update((list) => {
             list.push({
                 id: generateId(),
                 title: title,
-                date: date,
+                date: dayjs(),
                 isDone: false,
             });
             return list;
@@ -77,16 +79,52 @@
                 ما عندك مهام متبقية!
             </div>
         {:else}
-            <ol>
+            <ol class="w-full flex flex-col gap-4">
                 {#each $toDoList as toDoItem}
-                    <li class="text-5xl">
-                        {toDoItem.title}
-                        <button
+                    <li class="w-full flex bg-white rounded-lg p-2">
+                        <div class="flex-1 flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                class="checkbox checkbox-primary"
+                            />
+                            <span>
+                                {toDoItem.title}
+                            </span>
+                        </div>
+                        <!-- <button
                             on:click={() => remove(toDoItem.id)}
                             class="btn btn-error"
                         >
                             حذف
-                        </button>
+                        </button> -->
+                        <div class="flex gap-1">
+                            <button class="btn btn-xs h-6">
+                                {dayjs().to(dayjs(toDoItem.date))}
+                            </button>
+                            <button class="btn btn-xs h-6 w-6 p-[0.125rem]">
+                                <svg
+                                    class="text-base-content/50"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 32 32"
+                                    ><circle
+                                        cx="16"
+                                        cy="8"
+                                        r="2"
+                                        fill="currentColor"
+                                    /><circle
+                                        cx="16"
+                                        cy="16"
+                                        r="2"
+                                        fill="currentColor"
+                                    /><circle
+                                        cx="16"
+                                        cy="24"
+                                        r="2"
+                                        fill="currentColor"
+                                    /></svg
+                                >
+                            </button>
+                        </div>
                     </li>
                 {/each}
             </ol>
