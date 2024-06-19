@@ -1,30 +1,33 @@
 <script lang="ts">
     import dayjs from "dayjs";
     import "dayjs/locale/ar";
+    import { toDoList } from "$lib/stores/toDoList";
 
     dayjs.locale("ar");
-
-    let toDoList: ToDoItem[] = [];
 
     let title: string;
     let date: Date;
 
     function add() {
-        toDoList.push({
-            id: generateId(),
-            title: title,
-            date: date,
-            isDone: false,
+        toDoList.update((list) => {
+            list.push({
+                id: generateId(),
+                title: title,
+                date: date,
+                isDone: false,
+            });
+            return list;
         });
-        toDoList = toDoList;
         title = "";
     }
 
     function remove(id: string) {
-        let item = toDoList.find((item) => item.id === id)!;
-        let index = toDoList.indexOf(item);
-        toDoList.splice(index, 1);
-        toDoList = toDoList;
+        toDoList.update((list) => {
+            let item = list.find((item) => item.id === id)!;
+            let index = list.indexOf(item);
+            list.splice(index, 1);
+            return list;
+        });
     }
 
     function generateId() {
@@ -64,7 +67,7 @@
         >
     </section>
     <section class="flex-1 flex">
-        {#if toDoList.length === 0}
+        {#if $toDoList.length === 0}
             <div class="flex-1 flex flex-col justify-center items-center">
                 <img
                     src="/tree.svg"
@@ -74,17 +77,19 @@
                 ما عندك مهام متبقية!
             </div>
         {:else}
-            {#each toDoList as toDoItem}
-                <div class="text-5xl">
-                    {toDoItem.title}
-                    <button
-                        on:click={() => remove(toDoItem.id)}
-                        class="btn btn-error"
-                    >
-                        حذف
-                    </button>
-                </div>
-            {/each}
+            <ol>
+                {#each $toDoList as toDoItem}
+                    <li class="text-5xl">
+                        {toDoItem.title}
+                        <button
+                            on:click={() => remove(toDoItem.id)}
+                            class="btn btn-error"
+                        >
+                            حذف
+                        </button>
+                    </li>
+                {/each}
+            </ol>
         {/if}
     </section>
 </main>
