@@ -8,6 +8,13 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
+
+	interface ToDoItem {
+		id: string;
+        title: string;
+        date: Date;
+        isDone: boolean;
+    }
 }
 
 export {};
